@@ -169,3 +169,35 @@ void suspenderUsuario(Usuario usuarios[], int totalUsuarios) {
         cout << "Usuario no encontrado.\n";
     }
 }
+
+void agregarLibro(Libro libros[], int& totalLibros) {
+    Libro nuevoLibro;
+    nuevoLibro.id = totalLibros == 0 ? 1 : libros[totalLibros-1].id + 1;
+    cout << "Ingrese titulo del libro: ";
+    cin.ignore();
+    getline(cin, nuevoLibro.titulo);
+    cout << "Ingrese autor del libro: ";
+    getline(cin, nuevoLibro.autor);
+    nuevoLibro.disponible = true;
+
+    libros[totalLibros++] = nuevoLibro;
+    guardarLibros(libros, totalLibros);
+}
+
+void modificarLibro(Libro libros[], int totalLibros) {
+    int id;
+    cout << "Ingrese ID del libro a modificar: ";
+    cin >> id;
+
+    int indice = buscarLibroPorID(libros, totalLibros, id);
+    if (indice != -1) {
+        cout << "Ingrese nuevo titulo del libro: ";
+        cin.ignore();
+        getline(cin, libros[indice].titulo);
+        cout << "Ingrese nuevo autor del libro: ";
+        getline(cin, libros[indice].autor);
+        guardarLibros(libros, totalLibros);
+    } else {
+        cout << "Libro no encontrado.\n";
+    }
+}
