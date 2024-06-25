@@ -80,3 +80,25 @@ void guardarLibros(const Libro libros[], int totalLibros) {
     }
     archivo.close();
 }
+
+int buscarUsuarioPorID(Usuario usuarios[], int totalUsuarios, int id) {
+    int inicio = 0, fin = totalUsuarios - 1;
+    while (inicio <= fin) {
+        int medio = (inicio + fin) / 2;
+        if (usuarios[medio].id == id) return medio;
+        else if (usuarios[medio].id < id) inicio = medio + 1;
+        else fin = medio - 1;
+    }
+    return -1;
+}
+
+int buscarLibroPorID(Libro libros[], int totalLibros, int id) {
+    int inicio = 0, fin = totalLibros - 1;
+    while (inicio <= fin) {
+        int medio = (inicio + fin) / 2;
+        if (libros[medio].id == id) return medio;
+        else if (libros[medio].id < id) inicio = medio + 1;
+        else fin = medio - 1;
+    }
+    return -1;
+}
