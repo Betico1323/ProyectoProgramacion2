@@ -102,3 +102,70 @@ int buscarLibroPorID(Libro libros[], int totalLibros, int id) {
     }
     return -1;
 }
+Usuario* login(Usuario usuarios[], int totalUsuarios) {
+    string nombre, contrasena;
+    cout << "Ingrese su nombre de usuario: ";
+    cin >> nombre;
+    cout << "Ingrese su contrasena: ";
+    cin >> contrasena;
+
+    for (int i = 0; i < totalUsuarios; ++i) {
+        if (usuarios[i].nombre == nombre && usuarios[i].contrasena == contrasena) {
+            return &usuarios[i];
+        }
+    }
+    return nullptr;
+}
+
+void registrarUsuario(Usuario usuarios[], int& totalUsuarios) {
+    Usuario nuevoUsuario;
+    nuevoUsuario.id = totalUsuarios == 0 ? 1 : usuarios[totalUsuarios-1].id + 1;
+    cout << "Ingrese nombre de usuario: ";
+    cin >> nuevoUsuario.nombre;
+    cout << "Ingrese contrasena: ";
+    cin >> nuevoUsuario.contrasena;
+    cout << "Ingrese rol (admin/empleado/cliente): ";
+    cin >> nuevoUsuario.rol;
+    nuevoUsuario.suspendido = false;
+
+    usuarios[totalUsuarios++] = nuevoUsuario;
+    
+    ofstream archivo("usuarios.csv", ios::app);
+    archivo << nuevoUsuario.id << "," 
+            << nuevoUsuario.nombre << "," 
+            << nuevoUsuario.contrasena << "," 
+            << nuevoUsuario.rol << "," 
+            << (nuevoUsuario.suspendido ? "1" : "0") << "\n";
+    archivo.close();
+}
+
+void eliminarUsuario(Usuario usuarios[], int& totalUsuarios) {
+    int id;
+    cout << "Ingrese ID de usuario a eliminar: ";
+    cin >> id;
+
+    int indice = buscarUsuarioPorID(usuarios, totalUsuarios, id);
+    if (indice != -1) {
+        for (int i = indice; i < totalUsuarios - 1; ++i) {
+            usuarios[i] = usuarios[i + 1];
+        }
+        totalUsuarios--;
+        guardarUsuarios(usuarios, totalUsuarios);
+    } else {
+        cout << "Usuario no encontrado.\n";
+    }
+}
+
+void suspenderUsuario(Usuario usuarios[], int totalUsuarios) {
+    int id;
+    cout << "Ingrese ID de usuario a suspender: ";
+    cin >> id;
+
+    int indice = buscarUsuarioPorID(usuarios, totalUsuarios, id);
+    if (indice != -1) {
+        usuarios[indice].suspendido = true;
+        guardarUsuarios(usuarios, totalUsuarios);
+    } else {
+        cout << "Usuario no encontrado.\n";
+    }
+}
