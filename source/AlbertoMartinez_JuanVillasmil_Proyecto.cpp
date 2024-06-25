@@ -58,3 +58,25 @@ void cargarLibros(Libro libros[], int& totalLibros) {
     }
     archivo.close();
 }
+void guardarUsuarios(const Usuario usuarios[], int totalUsuarios) {
+    ofstream archivo("usuarios.csv");
+    for (int i = 0; i < totalUsuarios; ++i) {
+        archivo << usuarios[i].id << "," 
+                << usuarios[i].nombre << "," 
+                << usuarios[i].contrasena << "," 
+                << usuarios[i].rol << "," 
+                << (usuarios[i].suspendido ? "1" : "0") << "\n";
+    }
+    archivo.close();
+}
+
+void guardarLibros(const Libro libros[], int totalLibros) {
+    ofstream archivo("libros.csv");
+    for (int i = 0; i < totalLibros; ++i) {
+        archivo << libros[i].id << "," 
+                << libros[i].titulo << "," 
+                << libros[i].autor << "," 
+                << (libros[i].disponible ? "1" : "0") << "\n";
+    }
+    archivo.close();
+}
