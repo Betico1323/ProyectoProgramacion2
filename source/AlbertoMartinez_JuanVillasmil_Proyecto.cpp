@@ -201,3 +201,34 @@ void modificarLibro(Libro libros[], int totalLibros) {
         cout << "Libro no encontrado.\n";
     }
 }
+
+void eliminarLibro(Libro libros[], int& totalLibros) {
+    int id;
+    cout << "Ingrese ID del libro a eliminar: ";
+    cin >> id;
+
+    int indice = buscarLibroPorID(libros, totalLibros, id);
+    if (indice != -1) {
+        for (int i = indice; i < totalLibros - 1; ++i) {
+            libros[i] = libros[i + 1];
+        }
+        totalLibros--;
+        guardarLibros(libros, totalLibros);
+    } else {
+        cout << "Libro no encontrado.\n";
+    }
+}
+
+void retirarLibro(Libro libros[], int totalLibros) {
+    int id;
+    cout << "Ingrese ID del libro a retirar: ";
+    cin >> id;
+
+    int indice = buscarLibroPorID(libros, totalLibros, id);
+    if (indice != -1 && libros[indice].disponible) {
+        libros[indice].disponible = false;
+        guardarLibros(libros, totalLibros);
+    } else {
+        cout << "Libro no encontrado o no disponible.\n";
+    }
+}
