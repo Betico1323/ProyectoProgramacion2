@@ -246,3 +246,123 @@ void devolverLibro(Libro libros[], int totalLibros) {
         cout << "Libro no encontrado o no fue retirado.\n";
     }
 }
+
+int main() {
+    Usuario usuarios[200]; 
+    Libro libros[150];
+    int totalUsuarios = 0, totalLibros = 0;
+
+    cargarUsuarios(usuarios, totalUsuarios);
+    cargarLibros(libros, totalLibros);
+
+    while (true) {
+        Usuario* usuarioActual = nullptr;
+
+        while (usuarioActual == nullptr) {
+            usuarioActual = login(usuarios, totalUsuarios);
+            if (usuarioActual == nullptr) {
+                cout << "Usuario o contrasena incorrecta. Intente de nuevo.\n";
+            }
+        }
+
+        if (usuarioActual->suspendido) {
+            cout << "Usuario suspendido. Acceso denegado.\n";
+            return 0;
+        }
+
+        int opcion;
+
+        do {
+            cout << "\nMenu:\n";
+            if (usuarioActual->rol == "admin") {
+                cout << "1. Registrar usuario\n";
+                cout << "2. Eliminar usuario\n";
+                cout << "3. Suspender usuario\n";
+            }
+            if (usuarioActual->rol == "admin" || usuarioActual->rol == "empleado") {
+                cout << "4. Agregar libro\n";
+                cout << "5. Modificar libro\n";
+                cout << "6. Eliminar libro\n";
+            }
+            if (usuarioActual->rol == "cliente") {
+                cout << "7. Retirar libro\n";
+                cout << "8. Devolver libro\n";
+            }
+            cout << "9. Cerrar sesion\n";
+            cout << "0. Salir\n";
+            cout << "Seleccione una opcion: ";
+            cin >> opcion;
+
+            switch (opcion) {
+                case 1:
+                    if (usuarioActual->rol == "admin") {
+                        registrarUsuario(usuarios, totalUsuarios);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 2:
+                    if (usuarioActual->rol == "admin") {
+                        eliminarUsuario(usuarios, totalUsuarios);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 3:
+                    if (usuarioActual->rol == "admin") {
+                        suspenderUsuario(usuarios, totalUsuarios);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 4:
+                    if (usuarioActual->rol == "admin" || usuarioActual->rol == "empleado") {
+                        agregarLibro(libros, totalLibros);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 5:
+                    if (usuarioActual->rol == "admin" || usuarioActual->rol == "empleado") {
+                        modificarLibro(libros, totalLibros);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 6:
+                    if (usuarioActual->rol == "admin" || usuarioActual->rol == "empleado") {
+                        eliminarLibro(libros, totalLibros);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 7:
+                    if (usuarioActual->rol == "cliente") {
+                        retirarLibro(libros, totalLibros);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 8:
+                    if (usuarioActual->rol == "cliente") {
+                        devolverLibro(libros, totalLibros);
+                    } else {
+                        cout << "Opcion no valida.\n";
+                    }
+                    break;
+                case 9:
+                    cout << "Cerrando sesion...\n";
+                    usuarioActual = nullptr;
+                    break;
+                case 0:
+                    cout << "Saliendo del sistema.\n";
+                    return 0;
+                default:
+                    cout << "Opcion no valida.\n";
+                    break;
+            }
+        } while (opcion != 9 && opcion != 0);
+    }
+
+    return 0;
+}
