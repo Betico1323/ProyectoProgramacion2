@@ -232,3 +232,17 @@ void retirarLibro(Libro libros[], int totalLibros) {
         cout << "Libro no encontrado o no disponible.\n";
     }
 }
+
+void devolverLibro(Libro libros[], int totalLibros) {
+    int id;
+    cout << "Ingrese ID del libro a devolver: ";
+    cin >> id;
+
+    int indice = buscarLibroPorID(libros, totalLibros, id);
+    if (indice != -1 && !libros[indice].disponible) {
+        libros[indice].disponible = true;
+        guardarLibros(libros, totalLibros);
+    } else {
+        cout << "Libro no encontrado o no fue retirado.\n";
+    }
+}
