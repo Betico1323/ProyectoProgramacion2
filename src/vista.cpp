@@ -1,4 +1,4 @@
-#include "vista.h"
+#include "../include/vista.h"
 #include <iostream>
 
 void mostrarMenu(const Usuario* usuarioActual) {

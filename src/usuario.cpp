@@ -1,5 +1,5 @@
-#include "usuario.h"
-#include "controlador.h"
+#include "../include/usuario.h"
+#include "../include/controlador.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

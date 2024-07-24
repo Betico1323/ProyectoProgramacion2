@@ -1,7 +1,11 @@
-#include "usuario.h"
-#include "libro.h"
-#include "vista.h"
-#include "controlador.h"
+#include "../include/usuario.h"
+#include "../include/libro.h"
+#include "../include/vista.h"
+#include "../include/controlador.h"
+#include "../src/controlador.cpp"
+#include "../src/libro.cpp"
+#include "../src/usuario.cpp"
+#include "../src/vista.cpp"
 #include <iostream>
 
 int main() {

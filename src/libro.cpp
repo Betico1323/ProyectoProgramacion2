@@ -1,5 +1,5 @@
-#include "libro.h"
-#include "controlador.h"
+#include "../include/libro.h"
+#include "../include/controlador.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
